@@ -1,0 +1,1 @@
+Encrypted mirror of the LSLMI Percentage of Paid dashboard. index.html is AES-256-GCM encrypted; nothing here is readable without the viewing password. Updated hourly by an automated routine. The dashboard HTML itself comes from the Claude artifact pipeline (AppFolio Realm-X pull; planned migration to the AppFolio Reports API).

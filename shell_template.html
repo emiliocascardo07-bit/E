@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Percentage of Paid</title>
+<style>
+  :root {
+    --ground: #F6F2E9;
+    --surface: #FCFAF4;
+    --ink: #191612;
+    --ink-2: #4A443B;
+    --ink-3: #7C7466;
+    --rule: #DCD4C2;
+    --rule-strong: #C2B8A0;
+    --green: #2E5C42;
+    --brick: #963528;
+    --brick-bg: #F5E2DC;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ground);
+    color: var(--ink);
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 18px 32px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .gate {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 28px 24px 24px;
+    box-shadow: 0 1px 0 rgba(25, 22, 18, 0.04);
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", "Fraunces", serif;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+
+  .lock {
+    margin: 0 0 22px;
+    color: var(--ink-2);
+    font-size: 14px;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+  }
+
+  label.field {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 6px;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    font: inherit;
+    font-size: 16px; /* prevents iOS zoom on focus */
+    color: var(--ink);
+    background: #FFFDF8;
+    border: 1px solid var(--rule-strong);
+    border-radius: 3px;
+    padding: 11px 12px;
+    outline: none;
+  }
+
+  input[type="password"]:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(46, 92, 66, 0.15);
+  }
+
+  button {
+    margin-top: 14px;
+    width: 100%;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #FCFAF4;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    padding: 11px 14px;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
+  button:hover { background: #2A251E; }
+  button:disabled { opacity: 0.55; cursor: default; }
+
+  .remember {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .remember input { width: 15px; height: 15px; accent-color: var(--green); margin: 0; }
+  .remember label { cursor: pointer; }
+
+  .msg {
+    margin-top: 14px;
+    font-size: 13px;
+    min-height: 1px;
+  }
+
+  .msg[hidden] { display: none; }
+
+  .msg.error {
+    color: var(--brick);
+    background: var(--brick-bg);
+    border: 1px solid rgba(150, 53, 40, 0.25);
+    border-radius: 3px;
+    padding: 9px 11px;
+  }
+
+  .msg.working { color: var(--ink-3); }
+
+  .foot {
+    margin: 16px 2px 0;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: var(--ink-3);
+    text-align: center;
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 24px 18px 20px; }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="gate">
+  <div class="card">
+    <p class="eyebrow">LSLMI</p>
+    <h1>Percentage&nbsp;of&nbsp;Paid</h1>
+    <p class="lock">This dashboard is private. Enter the password to view.</p>
+
+    <form id="gate-form" autocomplete="on">
+      <label class="field" for="pw">Password</label>
+      <input id="pw" name="password" type="password" autocomplete="current-password"
+             autocapitalize="off" autocorrect="off" spellcheck="false" required>
+      <button id="go" type="submit">View</button>
+      <div class="remember">
+        <input id="remember" type="checkbox" checked>
+        <label for="remember">Remember on this device</label>
+      </div>
+    </form>
+
+    <div id="msg" class="msg" hidden></div>
+  </div>
+  <p class="foot">LSLMI &middot; encrypted &mdash; data is unreadable without the password</p>
+</div>
+
+<script id="payload" type="application/json">__PAYLOAD_JSON__</script>
+<script>
+(function () {
+  "use strict";
+
+  var STORE_KEY = "pop_pass";
+  var PAYLOAD = JSON.parse(document.getElementById("payload").textContent);
+
+  var form = document.getElementById("gate-form");
+  var pw = document.getElementById("pw");
+  var go = document.getElementById("go");
+  var remember = document.getElementById("remember");
+  var msg = document.getElementById("msg");
+
+  function show(text, kind) {
+    msg.textContent = text;
+    msg.className = "msg " + kind;
+    msg.hidden = false;
+  }
+  function clearMsg() { msg.hidden = true; msg.textContent = ""; msg.className = "msg"; }
+
+  function store(name) {
+    try { return window.localStorage.getItem(name); } catch (e) { return null; }
+  }
+  function put(name, value) {
+    try { window.localStorage.setItem(name, value); } catch (e) {}
+  }
+  function drop(name) {
+    try { window.localStorage.removeItem(name); } catch (e) {}
+  }
+
+  function b64ToBytes(b64) {
+    var bin = atob(b64);
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  function subtle() {
+    return (window.crypto && window.crypto.subtle) ? window.crypto.subtle : null;
+  }
+
+  function deriveKey(passphrase, salt, iterations) {
+    var enc = new TextEncoder();
+    return subtle().importKey("raw", enc.encode(passphrase), "PBKDF2", false, ["deriveKey"])
+      .then(function (base) {
+        return subtle().deriveKey(
+          { name: "PBKDF2", salt: salt, iterations: iterations, hash: "SHA-256" },
+          base,
+          { name: "AES-GCM", length: 256 },
+          false,
+          ["decrypt"]
+        );
+      });
+  }
+
+  // Resolves with the decrypted HTML fragment, or rejects (bad password / tampering).
+  function decrypt(passphrase) {
+    if (!subtle()) {
+      return Promise.reject(new Error("no-webcrypto"));
+    }
+    var salt = b64ToBytes(PAYLOAD.salt);
+    var iv = b64ToBytes(PAYLOAD.iv);
+    var ct = b64ToBytes(PAYLOAD.ct);
+    return deriveKey(passphrase, salt, PAYLOAD.iterations).then(function (key) {
+      return subtle().decrypt({ name: "AES-GCM", iv: iv, tagLength: 128 }, key, ct);
+    }).then(function (plain) {
+      return new TextDecoder("utf-8").decode(plain);
+    });
+  }
+
+  function render(fragment) {
+    var doc =
+      '<!doctype html><html lang="en"><head><meta charset="utf-8">' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+      '<meta name="robots" content="noindex,nofollow">' +
+      '</head><body>' + fragment + '</body></html>';
+    document.open();
+    document.write(doc);
+    document.close();
+  }
+
+  function attempt(passphrase, opts) {
+    opts = opts || {};
+    if (!passphrase) return;
+    go.disabled = true;
+    if (!opts.silent) show("Unlocking…", "working");
+    return decrypt(passphrase).then(function (fragment) {
+      if (opts.persist) put(STORE_KEY, passphrase);
+      render(fragment);
+    }).catch(function (err) {
+      go.disabled = false;
+      if (err && err.message === "no-webcrypto") {
+        show("This browser can’t decrypt the page. Try Safari, Chrome or Firefox over https.", "error");
+        return;
+      }
+      // AES-GCM authentication failure => wrong password (or corrupted payload).
+      if (opts.silent) {
+        drop(STORE_KEY);
+        clearMsg();
+      } else {
+        drop(STORE_KEY);
+        show("That password didn’t work — check with Emilio", "error");
+        pw.value = "";
+        pw.focus();
+      }
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // Enter key and the View button both land here.
+    attempt(pw.value, { persist: remember.checked });
+  });
+
+  pw.addEventListener("input", clearMsg);
+
+  // Belt-and-braces: some browsers/keyboards don't fire implicit form submission.
+  pw.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.keyCode === 13) {
+      e.preventDefault();
+      attempt(pw.value, { persist: remember.checked });
+    }
+  });
+
+  // Auto-unlock when a passphrase was remembered on this device.
+  var saved = store(STORE_KEY);
+  if (saved) {
+    remember.checked = true;
+    attempt(saved, { silent: true, persist: true });
+  } else {
+    try { pw.focus(); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
